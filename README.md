@@ -164,29 +164,6 @@ nohup ./deploy.sh > biligpt.log 2>&1 &
   → prompt 模板变量替换 → OpenAI 三路并行调用
   → 摘要(str) + 分段(JSON) + 脑图(JSON) → 前端三栏渲染
 ```
-
----
-
-## 🐛 技术亮点
-
-<details>
-<summary><b>🔍 第三方库 Bug 排查与绕过</b></summary>
-
-集成 `bilibili-api` 时，字幕 CDN 下载返回 HTTP 403。通过逐层 traceback 定位到库内部 `ass.py:83` 创建 HTTP 请求时遗漏 cookie 透传，改为自行用 `httpx` 带凭证直接请求 CDN 解决。
-</details>
-
-<details>
-<summary><b>🔒 全流程内存操作</b></summary>
-
-字幕原文、大模型输入输出均不落盘，符合数据最小化原则。
-</details>
-
-<details>
-<summary><b>🧪 字幕凭证诊断工具</b></summary>
-
-`/api/debug-subtitle` 端点逐步诊断：BV 号解析 → 凭证验证 → 视频信息 → 播放器信息 → 字幕 CDN 下载，每步独立上报状态和详情，方便排查环境问题。
-</details>
-
 ---
 
 ## 📁 项目结构
